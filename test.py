@@ -6,7 +6,7 @@ token = "my-token"
 langaugeTag = "en-us"
 vert = "default"
 transcriptionMode = "highAccuracy"
-localFilePath = "A:\\AOL-ordered\\05212005-255.wav"
+localFilePath = "A:\\05212005-255.wav"
 fileName = "05212005-255.wav"
 
 #Step 1,2
