@@ -21,7 +21,7 @@ langaugeTag = "en-us"
 vert = "default"
 transcriptionMode = "highAccuracy"
 localFilePath = "A:\\05212005-255.wav"
-#needed for codec parsing
+#extension needed for codec parsing
 fileName = "05212005-255.wav"
 
 #Step 1,2
