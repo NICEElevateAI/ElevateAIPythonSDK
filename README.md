@@ -43,7 +43,7 @@ while True:
     time.sleep(30)
 
 
-#Step 6
+#Step 5
 #get results after file is processed 
 getWordByWordTranscriptResponse = ElevateAI.GetWordByWordTranscript(interactionId, token)
 getPuncutatedTranscriptResponse = ElevateAI.GetPuncutatedTranscript(interactionId, token)
