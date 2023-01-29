@@ -3,6 +3,7 @@
 ElevateAI - the most afforable, accurate Speech-to-text (ASR) API. Free to use for hundreds of hours of audio per month!
 
 Choose your client - Async AsycClient.py or ElevateAI.py 
+
 Below is a step by step which will work with either.
 
 Steps  - Pre Req: signup for a free account @ https://app.elevateai.com and retrieve your API token 
