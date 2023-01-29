@@ -13,7 +13,7 @@ Steps  - Pre Req: signup for a free account @ https://app.elevateai.com and retr
 4. Check status every 30 seconds using Interaction ID until status is 'processed' or an error status https://docs.elevateai.com/tutorials/check-the-processing-status
 5. Retrieve results (transcripts, ai results) https://docs.elevateai.com/tutorials/get-phrase-by-phrase-transcript 
 
-#Usage:
+#Usage if using ElevateAI.py
 
 ```
 import ElevateAI
@@ -56,3 +56,4 @@ getAIResultsResponse = ElevateAI.GetAIResults(interactionId, token)
 input()
 
 ```
+
