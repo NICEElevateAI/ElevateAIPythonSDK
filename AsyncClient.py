@@ -1,7 +1,7 @@
 import aiohttp
 import asyncio
  
-class AsycClient:
+class AsyncClient:
     BOUNDARY = '_____123456789_____'
     def __init__(self, url, token):
         self.url = url
@@ -78,8 +78,8 @@ async def test():
     files = list(Path('d:/dev/elevateai-cli/sample-media').glob('*.wav'))
     #files = list(Path('c:/tmp').glob('*.wav'))
 
-    #cli = AsycClient('https://vaaissc01.nxondemand.com/PublicApi/v1', '75e63dc1-a121-43fd-8af6-626edc92d6a9')
-    cli = AsycClient('http://localhost:5280/v1', '75e63dc1-a121-43fd-8af6-626edc92d6a9')
+  
+    cli = AsyncClient('http://localhost:5280/v1', '75e63dc1-a121-43fd-8af6-626edc92d6a9')
 
     tab = []
     for f in files:
