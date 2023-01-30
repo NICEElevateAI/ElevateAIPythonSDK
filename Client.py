@@ -72,7 +72,6 @@ if __name__ == '__main__':
     #files = list(Path('d:/dev/elevateai-cli/sample-media').glob('*.wav'))
     files = list(Path('c:/tmp').glob('*.wav'))
 
-    #cli = Client('https://vaaissc01.nxondemand.com/PublicApi/v1', '75e63dc1-a121-43fd-8af6-626edc92d6a9')
     cli = Client('http://localhost:5280/v1', '75e63dc1-a121-43fd-8af6-626edc92d6a9')
     tab = []
     for f in files * 4:
