@@ -15,7 +15,7 @@ Steps  - Pre Req: signup for a free account @ https://app.elevateai.com and retr
 
 #Usage if using ElevateAI.py, if using AsyncClient.py or Client.py see those files for exmaples.
 
-```
+```python
 import ElevateAI
 import time
 
