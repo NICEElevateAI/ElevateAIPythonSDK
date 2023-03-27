@@ -1,3 +1,23 @@
+<p align="center">
+<img src="https://raw.githubusercontent.com/NICEElevateAI/NICEElevateAI/main/images/ElevateAI-blue-red-logo.png" />
+</p>
+
+<div align="center"><a name="menu"></a>
+  <h4>
+    <a href="https://www.elevateai.com">
+      Website
+    </a>
+    <span> | </span>
+    <a href="https://docs.elevateai.com">
+      Documentation
+    </a>
+    <span> | </span>
+    <a href="https://www.elevateai.com/blogs">
+      Blog
+    </a>
+  </h4>
+</div>
+
 # ElevateAI Python SDK
 
 [ElevateAI](https://www.elevateai.com) provides an accurate Speech-to-text (ASR) API.
