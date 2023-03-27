@@ -20,7 +20,7 @@
 
 # ElevateAI Python SDK
 
-[ElevateAI](https://www.elevateai.com) provides an accurate Speech-to-text (ASR) API.
+[ElevateAI](https://www.elevateai.com) provides an API for Speech-to-text (ASR), behavioral analysis and sentiment analysis of voice interactions.
 
 There are three implementations available:
 
