@@ -1,7 +1,7 @@
 import requests
 import json
 
-def DeclareAudioInteraction(language, verticle, downloadUri, token, audioTranscriptionMode, includeAiResults : bool):
+def DeclareAudioInteraction(language, verticle, downloadUri, token, audioTranscriptionMode, includeAiResults : bool, originalFileName=None, externalIdentifier=None):
     url = "https://api.elevateai.com/v1/interactions/"
 
     payload = json.dumps({
@@ -10,7 +10,9 @@ def DeclareAudioInteraction(language, verticle, downloadUri, token, audioTranscr
     "vertical": verticle,
     "audioTranscriptionMode": audioTranscriptionMode,
     "downloadUri":downloadUri,
-    "includeAiResults": includeAiResults
+    "includeAiResults": includeAiResults,
+    "originalfilename": originalFileName,
+    "externalidentifier": externalIdentifier
     })   
 
     if downloadUri is None :
@@ -19,7 +21,9 @@ def DeclareAudioInteraction(language, verticle, downloadUri, token, audioTranscr
         "languageTag": language,
         "vertical": verticle,
         "audioTranscriptionMode": audioTranscriptionMode,
-        "includeAiResults": includeAiResults
+        "includeAiResults": includeAiResults,
+        "originalfilename": originalFileName,
+        "externalidentifier": externalIdentifier
         })   
 
 
@@ -43,10 +47,11 @@ def GetInteractionStatus(interactionId, token):
     
     return response
 
-def UploadInteraction(interactionId, token, localFilePath, fileName):
+def UploadInteraction(interactionId, token, localFilePath, fileName, originalFileName=None):
     url = "https://api.elevateai.com/v1/interactions/%s/upload" % interactionId
 
     payload={}
+
     files=[
     (fileName,(fileName,open(localFilePath,'rb'),'application/octet-stream'))
     ]

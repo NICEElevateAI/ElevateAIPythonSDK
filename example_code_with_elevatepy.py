@@ -2,15 +2,17 @@ import ElevateAI
 import time
 
 #Prereq - make sure you create a free account @ https://app.elevateai.com - this will let you generate a token
-token = "my-token"
+token = "d7011e44-2266-4a64-bf12-5f2af2aeb84b"
 langaugeTag = "en-us"
 vert = "default"
 transcriptionMode = "highAccuracy"
-localFilePath = "A:\\05212005-255.wav"
-fileName = "05212005-255.wav"
+localFilePath = "/Users/nali/WIP/ElevateAIPythonSDK/sample.wav"
+fileName = "sample1.wav"
+originalFileName="sample1-originalfilename.wav"
+externalIdentifier="My own id"
 
 #Step 1,2
-declareResp = ElevateAI.DeclareAudioInteraction(langaugeTag, vert, None, token, transcriptionMode, False)
+declareResp = ElevateAI.DeclareAudioInteraction(langaugeTag, vert, None, token, transcriptionMode, False, originalFileName, externalIdentifier)
 
 declareJson = declareResp.json()
 
