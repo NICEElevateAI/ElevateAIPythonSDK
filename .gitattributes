@@ -3,3 +3,7 @@
 ###############################################################################
 * text=auto
 
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.py text
+
