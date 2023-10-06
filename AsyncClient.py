@@ -1,7 +1,7 @@
-"""Concurrent version of interacting with ElevateAI."""
+"""Async version of SDK."""
 
 import aiohttp
-import asyncio
+import json
 
 
 class AsyncClient:
@@ -9,7 +9,7 @@ class AsyncClient:
 
     BOUNDARY = "_____123456789_____"
 
-    def __init__(self, url, token):
+    def __init__(self, token, url="https://api.elevateai.com/v1"):
         """Initialize."""
         self.url = url
         self.api_token = token
@@ -30,11 +30,13 @@ class AsyncClient:
 
     async def declare(
         self,
-        languageTag="auto",
+        languageTag="en-us",
         vertical="default",
         transcriptionMode="highAccuracy",
         mediafile=None,
         url=None,
+        originalFilename=None,
+        externalIdentifier=None,
     ):
         """First step is to declare the interaction."""
         data = {
@@ -45,11 +47,31 @@ class AsyncClient:
             "audioTranscriptionMode": transcriptionMode,
             "includeAiResults": True,
         }
+        if originalFilename:
+            data["originalFilename"] = originalFilename
+        if externalIdentifier:
+            data["externalIdentifier"] = externalIdentifier
+
         async with aiohttp.ClientSession() as asess:
             async with asess.post(
                 self.declareUri, headers=self.jsonHeader, json=data
             ) as rsp:
-                i = await rsp.json()
+                if rsp.status == 401:  # If status code is Unauthorized
+                    print("Declare:Received 401, check if token is correct.")
+
+                raw_response = await rsp.text()
+
+                if raw_response:
+                    try:
+                        i = json.loads(raw_response)
+                    except json.JSONDecodeError:
+                        print("Declare: Failed to parse response as JSON.")
+                        return None
+                else:
+                    print("Declare: Empty response received.")
+                    return None
+
+        """If a filepath was passed in, go ahead and upload the file."""
         if mediafile:
             await self.upload(i, mediafile)
         i["status"] = await self.status(i)
@@ -63,8 +85,8 @@ class AsyncClient:
             with aiohttp.MultipartWriter("form-data",
                                          boundary=self.BOUNDARY) as dw:
                 fp = dw.append(
-                    open(f, "rb"), headers={
-                        "Content-Type": "application/octet-stream"}
+                    open(f, "rb"),
+                    headers={"Content-Type": "application/octet-stream"}
                 )
                 fp.set_content_disposition("form-data", filename=f)
                 rsp = await asess.post(
@@ -76,12 +98,23 @@ class AsyncClient:
         """Check status of interaction."""
         if type(interaction) == dict:
             interaction = interaction["interactionIdentifier"]
+
         async with aiohttp.ClientSession() as asess:
             async with asess.get(
                 self.statusUri % interaction, headers=self.jsonHeader
             ) as rsp:
-                j = await rsp.json()
-                return j["status"]
+                raw_response = await rsp.text()
+
+                if raw_response:
+                    try:
+                        j = json.loads(raw_response)
+                        return j["status"]
+                    except json.JSONDecodeError:
+                        print("Status: Failed to parse response as JSON.")
+                        return None
+                else:
+                    print("Status: Empty status response received.")
+                    return None
 
     async def transcripts(self, interaction, punctuated=True):
         """Get the transcriptions."""
@@ -100,45 +133,3 @@ class AsyncClient:
             rsp = await asess.get(self.aiUri % interaction,
                                   headers=self.jsonHeader)
             return await rsp.json()
-
-
-# async def test():
-#     import time
-#     from pathlib import Path
-
-#     files = list(Path("d:/dev/elevateai-cli/sample-media").glob("*.wav"))
-#     # files = list(Path('c:/tmp').glob('*.wav'))
-
-#     cli = AsyncClient(
-#         "http://localhost:5280/v1", "75e63dc1-a121-43fd-8af6-626edc92d6a9"
-#     )
-
-#     tab = []
-#     for f in files:
-#         fn = str(f)
-#         print("declaring interaction on %s ..." % fn)
-#         entry = await cli.declare(languageTag="auto", mediafile=fn)
-#         tab.append(entry)
-
-#     while True:
-#         for e in tab:
-#             s = await cli.status(e)
-#             if s == "processed":
-#                 tx = await cli.transcripts(e)
-#                 ai = await cli.ai(e)
-#                 print("Results[%s]:" % e["interactionIdentifier"], tx, ai)
-#             if e["status"] != s:
-#                 e["status"] = s
-#                 print("Status changed to %s" % s)
-
-#         processed = len([i for i in tab if i["status"] == "processed"])
-#         if processed == len(tab):
-#             print("DONE!")
-#             break
-#         else:
-#             print("......")
-#             time.sleep(10)
-
-
-# if __name__ == "__main__":
-#     asyncio.run(test())
