@@ -41,7 +41,7 @@ class AsyncClient:
         """First step is to declare the interaction."""
         data = {
             "type": "audio",
-            "downloadUrl": url,
+            "downloadUri": url,
             "languageTag": languageTag,
             "vertical": vertical,
             "audioTranscriptionMode": transcriptionMode,
